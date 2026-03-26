@@ -1,0 +1,36 @@
+import { useEffect, useState } from "react";
+import "./App.css";
+import Navbar from "./component/layout/navbar/Navbar";
+import HeroCarousel, {
+  heroSlides,
+} from "./component/layout/carousel/HeroCarousel";
+import AboutUs from "./component/layout/aboutUs/AboutUs";
+import LatestNews from "./component/layout/latestNews/LatestNews";
+import Footer from "./component/layout/footer/Footer";
+
+function App() {
+  const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.classList.toggle("dark", theme === "dark");
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
+
+  return (
+    <div className="App">
+      <Navbar theme={theme} onToggleTheme={toggleTheme} />
+      <main>
+        <HeroCarousel slides={heroSlides} />
+        <AboutUs />
+        <LatestNews />
+        <Footer />
+      </main>
+    </div>
+  );
+}
+
+export default App;

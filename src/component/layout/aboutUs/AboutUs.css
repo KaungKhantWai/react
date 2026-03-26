@@ -1,0 +1,80 @@
+.about-us {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  margin: 40px 0;
+  padding: 72px 24px;
+  text-align: center;
+  color: #ffffff;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.about-us::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.65);
+}
+
+.about-us__content {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+}
+
+.about-us__content h2 {
+  margin: 0 0 16px;
+  font-size: clamp(2rem, 3vw, 2.75rem);
+  letter-spacing: 0.02em;
+}
+
+.about-us__content p {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.about-us__button {
+  margin-top: 28px;
+  padding: 12px 32px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 200ms ease, box-shadow 200ms ease,
+    background 200ms ease;
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+}
+
+.about-us__button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.3);
+}
+
+.about-us__button:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .about-us {
+    min-height: 45vh;
+    margin: 48px 0;
+    padding: 56px 20px;
+  }
+
+  .about-us__content p {
+    font-size: 1rem;
+  }
+}
