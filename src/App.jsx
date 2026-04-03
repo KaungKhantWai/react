@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import Navbar from "./component/layout/navbar/Navbar";
-import HeroCarousel, {
-  heroSlides,
-} from "./component/layout/carousel/HeroCarousel";
-import AboutUs from "./component/layout/aboutUs/AboutUs";
-import LatestNews from "./component/layout/latestNews/LatestNews";
+
+import Home from "./pages/Home";
+import About from "./pages/About";
+
 import Footer from "./component/layout/footer/Footer";
+
+
 
 function App() {
   const [theme, setTheme] = useState("light");
@@ -21,15 +23,15 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="App overflow-x-hidden">
       <Navbar theme={theme} onToggleTheme={toggleTheme} />
-      <main>
-        <HeroCarousel slides={heroSlides} />
-        <AboutUs />
-        <LatestNews />
-        <Footer />
-      </main>
+      <Routes>
+        <Route path="/home" element={<Home />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+      <Footer />
     </div>
+
   );
 }
 

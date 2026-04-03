@@ -69,6 +69,7 @@ const GAP_PX = 24;
 
 const getVisibleCount = () => {
   if (typeof window === "undefined") return 1;
+  if (window.innerWidth >= 1280) return 4;
   if (window.innerWidth >= 1024) return 3;
   if (window.innerWidth >= 768) return 2;
   return 1;

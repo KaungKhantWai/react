@@ -18,8 +18,8 @@ function Footer() {
   return (
     <footer className="border-t border-white/10 bg-gradient-to-r from-gray-950 via-gray-900 to-gray-950 py-16">
       <div className="mx-auto w-full max-w-7xl px-6">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
-          <div className="space-y-6">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
+          <div className="space-y-6 lg:col-span-2">
             <div className="space-y-3">
               <h3 className="text-sm font-semibold uppercase tracking-widest text-white">
                 Contact Us

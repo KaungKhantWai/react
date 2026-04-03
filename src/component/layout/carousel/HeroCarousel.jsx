@@ -82,7 +82,7 @@ function HeroCarousel({ slides = heroSlides }) {
         loop
         speed={750}
         slidesPerView={1}
-        className="w-full h-[35vh] w-full md:h-[45vh]" 
+        className="w-full h-[28vh] sm:h-[32vh] md:h-[44vh] lg:h-[52vh] xl:h-[60vh]" 
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>
@@ -90,7 +90,7 @@ function HeroCarousel({ slides = heroSlides }) {
               <img
                 src={slide.image}
                 alt={slide.alt}
-                className="h-100px w-full object-cover"
+                className="h-full w-full object-cover"
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-slate-900/60" />
