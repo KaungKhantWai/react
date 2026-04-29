@@ -3,9 +3,9 @@ import React from 'react';
 
 function About() {
   return (
-    <div className="pt-20">
+    <div className="pt-20 text-center">
       <h1 className="text-3xl font-bold text-center">MYANMAR – CHINA AGRICULTURAL & LIVESTOCK DEVELOPMENT FOUNDATION - MCALDF</h1>
-      <h2>Organization Development and Definition</h2>
+      <h2 className="mt-5 mb-5">Organization Development and Definition</h2>
       <p className="text-left mt-4">MYANMAR – CHINA AGRICULTURAL & LIVESTOCK DEVELOPMENT FOUNDATION (MCALDF)
 The foundation is established to collaborate with agricultural and livestock foundations, associations, and companies in China to support and develop the agricultural and livestock sectors in Myanmar.</p>
 <p>Association Logo and Symbolism

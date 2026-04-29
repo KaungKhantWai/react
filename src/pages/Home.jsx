@@ -1,13 +1,12 @@
-import HeroCarousel from "../component/layout/carousel/HeroCarousel";
-import AboutUs from "../component/layout/aboutUs/AboutUs";
 import LatestNews from "../component/layout/latestNews/LatestNews";
-import Footer from "../component/layout/footer/Footer";
+import Hero from "../component/Hero";
+import AboutUs from "../component/AboutUs";
 
 
 function Home() {
   return (
     <main className="flex min-h-screen flex-col">
-      <HeroCarousel />
+      <Hero />
       <AboutUs />
       <LatestNews />
     </main>

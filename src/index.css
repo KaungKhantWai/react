@@ -1,12 +1,29 @@
 @import "tailwindcss";
-@custom-variant dark (&:where(.dark, .dark *));
 
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"');
+
+/* ── Your theme ── */
+:root {
+  --color-primary:   #1a1a2e;
+  --color-secondary: #e94560;
+  --color-light:     #f5f5f5;
+  --color-gray:      #94a3b8;
+  --color-white:     #ffffff;
+
+  --font-heading: 'Libre Baskerville', serif;
+  --font-body:    'Libre Baskerville', serif;
+
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-lg:   1.125rem;
+  --text-xl:   1.25rem;
+  --text-2xl:  1.5rem;
+  --text-4xl:  2.25rem;
+}
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Libre Baskerville', serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
