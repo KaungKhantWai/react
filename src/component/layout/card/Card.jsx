@@ -2,6 +2,7 @@ function Card({
   imageSrc = "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&auto=format&fit=crop&q=80",
   imageAlt = "Card image",
   title = "Into the Mountains",
+  date = "June 15, 2024",
   description = "Discover quiet trails, crisp air, and unforgettable views in the heart of the range.",
   href = "#",
   linkText = "Read More",
@@ -25,6 +26,9 @@ function Card({
           <p className="text-sm text-slate-600 dark:text-slate-300">
             {description}
           </p>
+          <time className="text-xs text-slate-500 dark:text-slate-400">
+            {date}
+          </time>
           <a
             href={href}
             className="group mt-auto inline-flex items-center gap-2 self-start rounded-full border border-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-700 shadow-sm transition-colors hover:border-slate-900 hover:bg-slate-900 hover:text-white dark:border-slate-700 dark:text-slate-200 dark:hover:border-white dark:hover:bg-white dark:hover:text-slate-900"

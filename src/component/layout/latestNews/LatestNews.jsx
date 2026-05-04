@@ -6,6 +6,7 @@ const demoNews = [
   {
     id: 1,
     title: "Mountain Sunrise Tour",
+    date: "May 2, 2026",
     description:
       "Catch the first light from the ridgeline with a guided dawn hike and warm drinks.",
     imageSrc:
@@ -75,7 +76,11 @@ const getVisibleCount = () => {
   return 1;
 };
 
-function LatestNews({ items = demoNews, title = "Latest News", linkTo = "/news" }) {
+function LatestNews({
+  items = demoNews,
+  title = "Latest News",
+  linkTo = "/news",
+}) {
   const [visibleCount, setVisibleCount] = useState(getVisibleCount());
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -129,7 +134,7 @@ function LatestNews({ items = demoNews, title = "Latest News", linkTo = "/news" 
   };
 
   return (
-    <section className="py-12">
+    <section className="py-12 bg-slate-50">
       <div className="mx-auto w-full max-w-6xl px-4">
         <div className="mb-6 flex items-center justify-between">
           <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">

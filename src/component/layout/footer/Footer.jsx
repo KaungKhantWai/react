@@ -1,105 +1,229 @@
-import { FaFacebookF, FaViber } from "react-icons/fa";
-import { FaTelegramPlane } from "react-icons/fa";
+export default function Footer() {
+  const currentYear = new Date().getFullYear();
 
-function Footer() {
-  const socialLinks = [
-    { label: "Facebook", href: "#", Icon: FaFacebookF },
-    { label: "Telegram", href: "#", Icon: FaTelegramPlane },
-    { label: "Viber", href: "#", Icon: FaViber },
-  ];
-
-  const quickLinks = [
-    { label: "Home", href: "#" },
-    { label: "About", href: "#" },
-    { label: "News", href: "#" },
-    { label: "Contact", href: "#" },
-  ];
+  const socialIconStyle = {
+    background: "rgba(255,255,255,0.08)",
+    border: "0.5px solid rgba(255,255,255,0.15)",
+  };
 
   return (
-    <footer className="border-t border-white/10 bg-gradient-to-r from-gray-950 via-gray-900 to-gray-950 py-16">
-      <div className="mx-auto w-full max-w-7xl px-6">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
-          <div className="space-y-6 lg:col-span-2">
-            <div className="space-y-3">
-              <h3 className="text-sm font-semibold uppercase tracking-widest text-white">
-                Contact Us
-              </h3>
-              <p className="text-sm text-gray-400/90">
-                Let us help you build your next big idea with modern, reliable
-                digital experiences.
-              </p>
-              <div className="space-y-2 text-sm text-gray-400/90">
-                <p>hello@yourcompany.com</p>
-                <p>+1 (555) 123-4567</p>
-                <p>123 Innovation Way, San Francisco, CA</p>
-              </div>
-            </div>
-            <div className="space-y-3">
-              <p className="text-xs font-semibold uppercase tracking-widest text-gray-400">
-                Social
-              </p>
-              <div className="flex items-center gap-3">
-                {socialLinks.map(({ label, href, Icon }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    aria-label={label}
-                    className="group rounded-xl border border-white/10 bg-white/5 p-3 text-gray-300 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-blue-600/20 hover:text-white hover:shadow-[0_0_18px_rgba(59,130,246,0.35)]"
-                  >
-                    <Icon className="h-4 w-4" />
-                  </a>
-                ))}
-              </div>
-            </div>
+    <footer
+      style={{ backgroundColor: "var(--color-primary)" }}
+      className="px-6 md:px-16 pt-16 pb-6 text-white"
+    >
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+        {/* Column 1 — Logo + Social */}
+        <div>
+          <div className="flex items-center gap-2 mb-4">
+            <img src="/logo.png" alt="logo" className="h-8 w-auto" />
+            <span
+              className="text-xl font-bold"
+              style={{
+                color: "var(--color-white)",
+                fontFamily: "var(--font-heading)",
+              }}
+            >
+              MCALDF
+            </span>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-sm font-semibold uppercase tracking-widest text-white">
-              Quick Links
-            </h3>
-            <ul className="space-y-3 text-sm text-gray-400/90">
-              {quickLinks.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="inline-flex items-center transition-all duration-300 hover:translate-x-1 hover:text-white"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <p
+            className="text-sm leading-relaxed mb-6 opacity-80"
+            style={{
+              color: "var(--color-muted)",
+              fontFamily: "var(--font-body)",
+            }}
+          >
+            A short description about your brand. Keep it warm and simple.
+          </p>
 
-          <div className="space-y-6">
-            <h3 className="text-sm font-semibold uppercase tracking-widest text-white">
-              Connect With Us
-            </h3>
-            <p className="text-sm text-gray-400/90">
-              Join our community and stay updated with product launches and
-              startup insights.
-            </p>
-            <div className="flex items-center gap-3">
-              {socialLinks.map(({ label, href, Icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  aria-label={label}
-                  className="group rounded-xl border border-white/10 bg-white/5 p-3 text-gray-300 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-blue-600/20 hover:text-white hover:shadow-[0_0_18px_rgba(59,130,246,0.35)]"
+          {/* Social icons with Hover */}
+          <div className="flex gap-3">
+            {[
+              {
+                id: "fb",
+                icon: "M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z",
+                url: "https://facebook.com",
+              },
+              {
+                id: "tg",
+                icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.69-.52.36-1 .53-1.42.52-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.25.38-.51 1.07-.78 4.19-1.82 6.98-3.02 8.38-3.61 3.98-1.67 4.81-1.96 5.35-1.97.12 0 .38.03.55.17.14.12.18.28.2.45-.02.07-.02.13-.02.19z",
+                url: "https://t.me/yourusername",
+              },
+            ].map((social) => (
+              <a
+                key={social.id}
+                href={social.url}
+                target="_blank"
+                rel="noreferrer"
+                className="w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-white/20 active:scale-95"
+                style={socialIconStyle}
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="var(--color-white)"
                 >
-                  <Icon className="h-4 w-4" />
-                </a>
-              ))}
-            </div>
+                  <path d={social.icon} />
+                </svg>
+              </a>
+            ))}
           </div>
         </div>
 
-        <div className="mt-12 border-t border-white/10 pt-6 text-center text-sm text-gray-500">
-          &copy; 2026 Your Company. Built with innovation.
+        {/* Column 2 — Quick Links */}
+        <div>
+          <h4
+            className="text-xs uppercase tracking-[0.2em] font-bold mb-6"
+            style={{ color: "var(--color-secondary)" }}
+          >
+            Quick Links
+          </h4>
+          <ul className="space-y-3 list-none p-0">
+            <li>
+              <a
+                href="/home"
+                className="text-sm transition-all duration-200 hover:pl-2 opacity-70 hover:opacity-100"
+                style={{
+                  color: "var(--color-muted)",
+                  fontFamily: "var(--font-body)",
+                }}
+              >
+                Home
+              </a>
+            </li>
+            <li>
+              <a
+                href="/about"
+                className="text-sm transition-all duration-200 hover:pl-2 opacity-70 hover:opacity-100"
+                style={{
+                  color: "var(--color-muted)",
+                  fontFamily: "var(--font-body)",
+                }}
+              >
+                About Us
+              </a>
+            </li>
+            <li>
+              <a
+                href="/services"
+                className="text-sm transition-all duration-200 hover:pl-2 opacity-70 hover:opacity-100"
+                style={{
+                  color: "var(--color-muted)",
+                  fontFamily: "var(--font-body)",
+                }}
+              >
+                Services
+              </a>
+            </li>
+            <li>
+              <a
+                href="/news"
+                className="text-sm transition-all duration-200 hover:pl-2 opacity-70 hover:opacity-100"
+                style={{
+                  color: "var(--color-muted)",
+                  fontFamily: "var(--font-body)",
+                }}
+              >
+                Latest News
+              </a>
+            </li>
+            <li>
+              <a
+                href="/contact"
+                className="text-sm transition-all duration-200 hover:pl-2 opacity-70 hover:opacity-100"
+                style={{
+                  color: "var(--color-muted)",
+                  fontFamily: "var(--font-body)",
+                }}
+              >
+                Contact
+              </a>
+            </li>
+          </ul>
         </div>
+
+        {/* Column 3 — Contact */}
+        <div className="text-sm">
+          <h4
+            className="text-xs uppercase tracking-[0.2em] font-bold mb-6"
+            style={{ color: "var(--color-secondary)" }}
+          >
+            Contact Us
+          </h4>
+
+          <div className="space-y-5">
+            <div className="flex items-start gap-3 group">
+              <div className="mt-1 transition-transform group-hover:rotate-12">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="var(--color-secondary)"
+                >
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                </svg>
+              </div>
+              <span
+                style={{ color: "var(--color-muted)" }}
+                className="opacity-80 group-hover:opacity-100 transition-opacity"
+              >
+                123 Your Street, <br /> City, Country
+              </span>
+            </div>
+
+            <div className="flex items-center gap-3 group">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="var(--color-secondary)"
+                className="group-hover:scale-110 transition-transform"
+              >
+                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+              </svg>
+              <a
+                href="tel:+1234567890"
+                style={{ color: "var(--color-muted)" }}
+                className="opacity-80 hover:opacity-100 hover:text-white transition-all"
+              >
+                +1 234 567 890
+              </a>
+            </div>
+
+            <div className="flex items-center gap-3 group">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="var(--color-secondary)"
+                className="group-hover:translate-x-1 transition-transform"
+              >
+                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+              </svg>
+              <a
+                href="mailto:hello@lumina.com"
+                style={{ color: "var(--color-muted)" }}
+                className="opacity-80 hover:opacity-100 hover:text-white transition-all underline-offset-4 hover:underline"
+              >
+                hello@lumina.com
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom bar */}
+      <div
+        className="border-t pt-6 text-center text-[10px] uppercase tracking-widest font-medium opacity-50"
+        style={{
+          borderColor: "rgba(255,255,255,0.1)",
+          color: "var(--color-muted)",
+        }}
+      >
+        © {currentYear} Lumina. Built with love.
       </div>
     </footer>
   );
 }
-
-export default Footer;
