@@ -7,8 +7,8 @@ function Home() {
   return (
     <main className="flex min-h-screen flex-col">
       <Hero />
-      <AboutUs />
       <Section />
+      <AboutUs />
       <LatestNews />
     </main>
   );

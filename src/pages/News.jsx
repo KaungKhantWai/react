@@ -9,7 +9,7 @@ const featuredPost = {
   readTime: "5 min read",
   description:
     "A short description of the featured article goes here. Keep it to two lines so the layout stays clean and readable.",
-  image: "/news-featured.jpg",
+  image: "/mission.jpg",
   link: "/news/featured",
 };
 
@@ -36,7 +36,7 @@ const allPosts = [
     date: "May 2, 2026",
     description:
       "Short description of this news article goes here to give readers a preview.",
-    image: "/news-1.jpg",
+    image: "/vision.jpg",
   },
   {
     id: "2",
@@ -45,7 +45,7 @@ const allPosts = [
     date: "May 1, 2026",
     description:
       "Short description of this news article goes here to give readers a preview.",
-    image: "/news-2.jpg",
+    image: "/section.jpg",
   },
   {
     id: "3",
@@ -54,7 +54,7 @@ const allPosts = [
     date: "Apr 30, 2026",
     description:
       "Short description of this news article goes here to give readers a preview.",
-    image: "/news-3.jpg",
+    image: "/vision.jpg",
   },
   {
     id: "4",
@@ -63,7 +63,7 @@ const allPosts = [
     date: "Apr 29, 2026",
     description:
       "Short description of this news article goes here to give readers a preview.",
-    image: "/news-4.jpg",
+    image: "/about.jpg",
   },
   {
     id: "5",
@@ -72,7 +72,7 @@ const allPosts = [
     date: "Apr 28, 2026",
     description:
       "Short description of this news article goes here to give readers a preview.",
-    image: "/news-5.jpg",
+    image: "/hero-bg.jpg",
   },
   {
     id: "6",
@@ -81,7 +81,7 @@ const allPosts = [
     date: "Apr 27, 2026",
     description:
       "Short description of this news article goes here to give readers a preview.",
-    image: "/news-6.jpg",
+    image: "/mission.jpg",
   },
   {
     id: "7",
@@ -90,7 +90,7 @@ const allPosts = [
     date: "Apr 26, 2026",
     description:
       "Short description of this news article goes here to give readers a preview.",
-    image: "/news-7.jpg",
+    image: "/section.jpg",
   },
   {
     id: "8",
@@ -99,7 +99,7 @@ const allPosts = [
     date: "Apr 25, 2026",
     description:
       "Short description of this news article goes here to give readers a preview.",
-    image: "/news-8.jpg",
+    image: "/about.jpg",
   },
   {
     id: "9",
@@ -108,7 +108,7 @@ const allPosts = [
     date: "Apr 24, 2026",
     description:
       "Short description of this news article goes here to give readers a preview.",
-    image: "/news-9.jpg",
+    image: "/mission.jpg",
   },
 ];
 

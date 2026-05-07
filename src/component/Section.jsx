@@ -1,80 +1,93 @@
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+
 export default function Section() {
+    const [breakingPost, setBreakingPost] = useState(null);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/posts")
+      .then(res => res.json())
+      .then(data => setBreakingPost(data.data[0]))
+      .catch(err => console.error(err));
+  }, []);
+
+  if (!breakingPost) return null;
+
   return (
     <section
-      className="flex flex-col md:flex-row items-center gap-12 px-6 md:px-16 py-16 md:py-24"
+      className="flex justify-center items-center gap-12 px-6 md:px-16 py-16 md:py-24"
       style={{ backgroundColor: "var(--color-light)" }}
     >
-      {/* Left — Image */}
-      <div className="w-full md:w-1/2">
-        <img
-          src="/section.jpg"
-          alt="About us"
-          className="w-full h-[400px] md:h-[500px] object-cover rounded-2xl"
-        />
-      </div>
-
-      {/* Right — Text */}
-      <div className="w-full md:w-1/2">
-        {/* Small label */}
-        <span
-          className="text-xs uppercase tracking-widest font-medium mb-4 block"
-          style={{ color: "var(--color-secondary)" }}
-        >
-          About Us
-        </span>
-
-        {/* H1 — main heading */}
-        <h1
-          className="text-3xl md:text-4xl font-bold leading-tight mb-2"
+      <div
+          className="relative w-full max-w-6xl h-[400px] md:h-[550px] rounded-2xl overflow-hidden flex items-end"
           style={{
-            color: "var(--color-primary)",
-            fontFamily: "var(--font-heading)",
+            backgroundImage: `url('http://localhost:5000/uploads/${breakingPost.image}')`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
           }}
         >
-          We Create Beautiful Experiences
-        </h1>
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.2) 60%, transparent 100%)",
+            }}
+          />
 
-        {/* H2 — sub heading */}
-        <h2
-          className="text-lg font-normal mb-6"
-          style={{
-            color: "var(--color-muted)",
-            fontFamily: "var(--font-heading)",
-          }}
-        >
-          Designers, builders & storytellers
-        </h2>
+          <div className="relative p-6 md:p-8">
+            <span
+              className="inline-block text-xs uppercase tracking-widest font-semibold px-3 py-1 rounded mb-3"
+              style={{
+                backgroundColor: "var(--color-secondary)",
+                color: "var(--color-white)",
+              }}
+            >
+              {breakingPost.category}
+            </span>
+            <h2
+              className="text-xl md:text-2xl font-bold leading-snug mb-2"
+              style={{ color: "#ffffff", fontFamily: "var(--font-heading)" }}
+            >
+              {breakingPost.title}
+            </h2>
+            <p
+              className="text-xs mb-3"
+              style={{ color: "rgba(255,255,255,0.6)" }}
+            >
+              {breakingPost.date} &nbsp;·&nbsp; {breakingPost.readTime}
+            </p>
+            <p
+              className="text-sm leading-relaxed mb-4 max-w-lg"
+              style={{
+                color: "rgba(255,255,255,0.75)",
+                fontFamily: "var(--font-body)",
+              }}
+            >
+              {breakingPost.author}
+            </p>
 
-        {/* Decorative line */}
-        <div
-          className="w-10 h-0.5 mb-6"
-          style={{ backgroundColor: "var(--color-secondary)" }}
-        />
+            <p
+            className="text-xs mb-3"
+            style={{ color: "rgba(255,255,255,0.6)" }}
+          >
+            {new Date(breakingPost.createdAt).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}
+          </p>
 
-        {/* Paragraphs */}
-        <p
-          className="text-base leading-relaxed mb-4"
-          style={{
-            color: "var(--color-primary)",
-            fontFamily: "var(--font-body)",
-          }}
-        >
-          This is your main paragraph. Tell visitors who you are, what you do,
-          and why it matters. Keep it warm and personal — people connect with
-          people, not companies.
-        </p>
+            {/* ✅ fixed — uses featuredPost.link */}
+            <Link
+              to={`/posts/${breakingPost.id}`}
+              className="text-xs uppercase tracking-widest font-semibold hover:opacity-70 transition-opacity"
+              style={{ color: "var(--color-secondary)" }}
+            >
+              Read More →
+            </Link>
+          </div>
+        </div>
 
-        <p
-          className="text-base leading-relaxed"
-          style={{
-            color: "var(--color-muted)",
-            fontFamily: "var(--font-body)",
-          }}
-        >
-          A second paragraph if you need more space. Talk about your values,
-          your approach, or your story.
-        </p>
-      </div>
     </section>
   );
 }
