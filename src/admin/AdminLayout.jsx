@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const user = JSON.parse(localStorage.getItem("user")) || {};
 
@@ -17,6 +17,18 @@ const NAV = [
       { to: "/admin/users", icon: "users", label: "Users" },
     ],
   },
+  {
+    label: "Settings",
+    items: [
+      { to: "/admin/settings", icon: "settings", label: "Settings" },
+    ],
+  },
+  {
+    label: "Logout",
+    items: [
+      { to: "/admin/logout", icon: "logout", label: "Logout" },
+    ],
+  }
 ];
 
 const icons = {
@@ -43,11 +55,25 @@ const icons = {
       <path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.2 3.2l1.4 1.4M11.4 11.4l1.4 1.4M3.2 12.8l1.4-1.4M11.4 4.6l1.4-1.4"/>
     </svg>
   ),
+  logout: (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <path d="M6 2H3a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/>
+      <polyline points="11 11 14 8 11 5"/>
+      <line x1="14" y1="8" x2="6" y2="8"/>
+    </svg>
+  ),
 };
 
 export default function AdminLayout({ children }) {
   const location = useLocation();
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
+
+  // ✅ Fix 1: handleLogout was missing
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
 
   return (
     <div style={{ display: "flex", minHeight: "100vh", background: "#F7F6F3", fontFamily: "'DM Sans', sans-serif" }}>
@@ -91,6 +117,32 @@ export default function AdminLayout({ children }) {
             )}
             {section.items.map(item => {
               const active = location.pathname === item.to;
+
+              // ✅ Fix 2: if block now properly closed, and normal Link return added below
+              if (item.icon === "logout") {
+                return (
+                  <button
+                    key={item.to}
+                    onClick={handleLogout}
+                    style={{
+                      display: "flex", alignItems: "center", gap: 10, width: "100%",
+                      padding: collapsed ? "9px 0" : "9px 1.25rem",
+                      justifyContent: collapsed ? "center" : "flex-start",
+                      color: "#e05252",
+                      background: "none",
+                      borderWidth: "0 0 0 2px", borderStyle: "solid", borderColor: "transparent",
+                      cursor: "pointer", fontSize: 13.5, fontWeight: 400,
+                      transition: "all .12s",
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.color = "#ff6b6b"}
+                    onMouseLeave={e => e.currentTarget.style.color = "#e05252"}
+                  >
+                    <span style={{ flexShrink: 0 }}>{icons.logout}</span>
+                    {!collapsed && <span style={{ whiteSpace: "nowrap" }}>Logout</span>}
+                  </button>
+                );
+              }
+
               return (
                 <Link key={item.to} to={item.to} style={{
                   display: "flex", alignItems: "center", gap: 10,
