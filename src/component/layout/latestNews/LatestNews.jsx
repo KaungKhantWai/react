@@ -72,7 +72,7 @@ function LatestNews({ title = "Latest News", linkTo = "/news" }) {
           </h2>
           <Link
             to={linkTo}
-            className="group inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700"
+            className="group inline-flex items-center gap-2 text-sm font-semibold hover:text-blue-700" style={{ color: "var(--color-secondary)" }}
           >
             <span>See More</span>
             <svg viewBox="0 0 20 20" className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="currentColor">
@@ -81,7 +81,7 @@ function LatestNews({ title = "Latest News", linkTo = "/news" }) {
           </Link>
         </div>
 
-        {/* ⭐ Grid Layout: ၃ ခုကို ဘေးတိုက်ပြမယ် */}
+        {/*  Grid Layout: ၃ ခုကို ဘေးတိုက်ပြမယ် */}
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {items.map((item) => (
             <div key={item.id} className="flex justify-center">

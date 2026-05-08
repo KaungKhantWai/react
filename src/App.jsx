@@ -1,4 +1,5 @@
-import { Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Navigate, Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -16,6 +17,23 @@ import CreatePostPage from "./admin/CreatePostPage";
 import EditPostPage from "./admin/EditPostPage";
 import UsersPage from "./admin/UsersPage";
 
+const API = "http://localhost:5000";
+
+const getStoredUser = () => {
+  try {
+    return JSON.parse(localStorage.getItem("user")) || null;
+  } catch {
+    return null;
+  }
+};
+
+const clearStoredAuth = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+};
+
+const isAdminUser = (user) => user?.role?.toLowerCase() === "admin";
+
 function PublicLayout({ children }) {
   return (
     <>
@@ -26,8 +44,96 @@ function PublicLayout({ children }) {
   );
 }
 
-function AdminPage({ children }) {
-  return <AdminLayout>{children}</AdminLayout>;
+function ProtectedAdminPage({ children, adminOnly = false }) {
+  const location = useLocation();
+  const [auth, setAuth] = useState({
+    status: "checking",
+    user: getStoredUser(),
+  });
+
+  useEffect(() => {
+    let isActive = true;
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      setAuth({ status: "unauthenticated", user: null });
+      return undefined;
+    }
+
+    const verifyToken = async () => {
+      try {
+        const res = await fetch(`${API}/api/users/me`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const contentType = res.headers.get("content-type");
+        const data = contentType?.includes("application/json")
+          ? await res.json()
+          : null;
+
+        if (!res.ok) {
+          throw new Error(data?.message || "Authentication failed");
+        }
+
+        const user = data?.user || getStoredUser();
+
+        if (adminOnly && !isAdminUser(user)) {
+          if (isActive) {
+            setAuth({ status: "forbidden", user });
+          }
+          return;
+        }
+
+        if (data?.user) {
+          localStorage.setItem("user", JSON.stringify(data.user));
+        }
+
+        if (isActive) {
+          setAuth({ status: "authenticated", user });
+        }
+      } catch (err) {
+        console.error("Admin authentication failed:", err);
+        clearStoredAuth();
+
+        if (isActive) {
+          setAuth({ status: "unauthenticated", user: null });
+        }
+      }
+    };
+
+    verifyToken();
+
+    return () => {
+      isActive = false;
+    };
+  }, [adminOnly]);
+
+  if (auth.status === "checking") {
+    return (
+      <div
+        style={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "#F7F6F3",
+          color: "#777",
+          fontFamily: "'DM Sans', sans-serif",
+        }}
+      >
+        Checking admin access...
+      </div>
+    );
+  }
+
+  if (auth.status === "unauthenticated") {
+    return <Navigate to="/login" replace state={{ from: location }} />;
+  }
+
+  if (auth.status === "forbidden") {
+    return <Navigate to="/admin" replace />;
+  }
+
+  return <AdminLayout user={auth.user}>{children}</AdminLayout>;
 }
 
 function App() {
@@ -45,10 +151,10 @@ function App() {
         // Admin routes
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/admin" element={<AdminPage><PostsPage /></AdminPage>} />
-        <Route path="/admin/create" element={<AdminPage><CreatePostPage /></AdminPage>} />
-        <Route path="/admin/edit/:id" element={<AdminPage><EditPostPage /></AdminPage>} />
-        <Route path="/admin/users" element={<AdminPage><UsersPage /></AdminPage>} />
+        <Route path="/admin" element={<ProtectedAdminPage><PostsPage /></ProtectedAdminPage>} />
+        <Route path="/admin/create" element={<ProtectedAdminPage><CreatePostPage /></ProtectedAdminPage>} />
+        <Route path="/admin/edit/:id" element={<ProtectedAdminPage><EditPostPage /></ProtectedAdminPage>} />
+        <Route path="/admin/users" element={<ProtectedAdminPage adminOnly><UsersPage /></ProtectedAdminPage>} />
       </Routes>
     </div>
   );

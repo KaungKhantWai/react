@@ -1,128 +1,165 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 // ── Data ──
-const featuredPost = {
-  tag: "Breaking",
-  title: "Your Most Important News Story Goes Right Here as the Headline",
-  date: "May 2, 2026",
-  readTime: "5 min read",
-  description:
-    "A short description of the featured article goes here. Keep it to two lines so the layout stays clean and readable.",
-  image: "/mission.jpg",
-  link: "/news/featured",
+const API_BASE_URL = "http://localhost:5000";
+const SEARCH_ALIASES = {
+  technology: "tech",
 };
 
-const trendingPosts = [
-  {
-    id: "1",
-    title: "First trending news title goes here",
-    date: "May 1, 2026",
-  },
-  {
-    id: "2",
-    title: "Second trending article title here",
-    date: "Apr 30, 2026",
-  },
-  { id: "3", title: "Third trending story title here", date: "Apr 29, 2026" },
-  { id: "4", title: "Fourth trending news title here", date: "Apr 28, 2026" },
-];
+const fallbackFeaturedPost = {
+  tag: "Latest",
+  title: "Latest news will appear here",
+  date: "Latest update",
+  readTime: "1 min read",
+  description: "Check back soon for the newest article from MCALDF.",
+  image: "/mission.jpg",
+  link: "/news",
+};
 
-const allPosts = [
-  {
-    id: "1",
-    tag: "Category",
-    title: "News Article Title One",
-    date: "May 2, 2026",
-    description:
-      "Short description of this news article goes here to give readers a preview.",
-    image: "/vision.jpg",
-  },
-  {
-    id: "2",
-    tag: "Category",
-    title: "News Article Title Two",
-    date: "May 1, 2026",
-    description:
-      "Short description of this news article goes here to give readers a preview.",
-    image: "/section.jpg",
-  },
-  {
-    id: "3",
-    tag: "Category",
-    title: "News Article Title Three",
-    date: "Apr 30, 2026",
-    description:
-      "Short description of this news article goes here to give readers a preview.",
-    image: "/vision.jpg",
-  },
-  {
-    id: "4",
-    tag: "Category",
-    title: "News Article Title Four",
-    date: "Apr 29, 2026",
-    description:
-      "Short description of this news article goes here to give readers a preview.",
-    image: "/about.jpg",
-  },
-  {
-    id: "5",
-    tag: "Category",
-    title: "News Article Title Five",
-    date: "Apr 28, 2026",
-    description:
-      "Short description of this news article goes here to give readers a preview.",
-    image: "/hero-bg.jpg",
-  },
-  {
-    id: "6",
-    tag: "Category",
-    title: "News Article Title Six",
-    date: "Apr 27, 2026",
-    description:
-      "Short description of this news article goes here to give readers a preview.",
-    image: "/mission.jpg",
-  },
-  {
-    id: "7",
-    tag: "Category",
-    title: "News Article Title Seven",
-    date: "Apr 26, 2026",
-    description:
-      "Short description of this news article goes here to give readers a preview.",
-    image: "/section.jpg",
-  },
-  {
-    id: "8",
-    tag: "Category",
-    title: "News Article Title Eight",
-    date: "Apr 25, 2026",
-    description:
-      "Short description of this news article goes here to give readers a preview.",
-    image: "/about.jpg",
-  },
-  {
-    id: "9",
-    tag: "Category",
-    title: "News Article Title Nine",
-    date: "Apr 24, 2026",
-    description:
-      "Short description of this news article goes here to give readers a preview.",
-    image: "/mission.jpg",
-  },
-];
+const formatPostDate = (post) => {
+  const dateValue = post.datetime || post.createdAt;
+
+  if (!dateValue) {
+    return "Latest update";
+  }
+
+  const date = new Date(dateValue);
+
+  if (Number.isNaN(date.getTime())) {
+    return "Latest update";
+  }
+
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+};
+
+const getPostImageSrc = (image) => {
+  if (!image) {
+    return fallbackFeaturedPost.image;
+  }
+
+  const imageSrc = String(image);
+
+  if (imageSrc.startsWith("http") || imageSrc.startsWith("/")) {
+    return imageSrc;
+  }
+
+  return `${API_BASE_URL}/uploads/${imageSrc}`;
+};
+
+const getPostContent = (post) =>
+  post.paragraph || post.content || post.description || "";
+
+const getPostExcerpt = (post) => {
+  const content = getPostContent(post).replace(/\s+/g, " ").trim();
+
+  if (!content) {
+    return "Read the latest update from MCALDF.";
+  }
+
+  return content.length > 150 ? `${content.slice(0, 147)}...` : content;
+};
+
+const estimateReadTime = (post) => {
+  const words = getPostContent(post).trim().split(/\s+/).filter(Boolean).length;
+  const minutes = Math.max(1, Math.ceil(words / 200));
+
+  return `${minutes} min read`;
+};
+
+const mapPostToFeaturedPost = (post) => ({
+  tag: post.category || "Latest",
+  title: post.title || "Untitled news",
+  date: formatPostDate(post),
+  readTime: estimateReadTime(post),
+  description: getPostExcerpt(post),
+  image: getPostImageSrc(post.image),
+  link: post.id ? `/posts/${post.id}` : fallbackFeaturedPost.link,
+});
+
+const mapPostToTrendingPost = (post, index) => ({
+  id: post.id || `latest-${index}`,
+  title: post.title || "Untitled news",
+  date: formatPostDate(post),
+  image: getPostImageSrc(post.image),
+  link: post.id ? `/posts/${post.id}` : "/news",
+});
+
+const mapPostToGridPost = (post, index) => ({
+  id: post.id || `post-${index}`,
+  tag: post.category || "Latest",
+  title: post.title || "Untitled news",
+  date: formatPostDate(post),
+  description: getPostExcerpt(post),
+  image: getPostImageSrc(post.image),
+  link: post.id ? `/posts/${post.id}` : "/news",
+});
+
+const getApiSearchTerm = (value) => {
+  const searchTerm = value.trim();
+  const alias = SEARCH_ALIASES[searchTerm.toLowerCase()];
+
+  return alias || searchTerm;
+};
 
 const POSTS_PER_PAGE = 6;
 
 export default function News() {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [featuredPost, setFeaturedPost] = useState(fallbackFeaturedPost);
+  const [trendingPosts, setTrendingPosts] = useState([]);
+  const [newsPosts, setNewsPosts] = useState([]);
+  const [isLoadingPosts, setIsLoadingPosts] = useState(true);
 
-  const filtered = allPosts.filter(
-    (post) =>
-      post.title.toLowerCase().includes(search.toLowerCase()) ||
-      post.description.toLowerCase().includes(search.toLowerCase()),
-  );
+  useEffect(() => {
+    let isActive = true;
+
+    const fetchNewsPosts = async () => {
+      try {
+        setIsLoadingPosts(true);
+
+        const searchTerm = getApiSearchTerm(search);
+        const query = searchTerm
+          ? `?search=${encodeURIComponent(searchTerm)}`
+          : "";
+        const res = await fetch(`${API_BASE_URL}/api/posts${query}`);
+        const contentType = res.headers.get("content-type");
+        const json = contentType?.includes("application/json")
+          ? await res.json()
+          : null;
+        const posts = Array.isArray(json?.data) ? json.data : [];
+
+        if (res.ok && isActive) {
+          setNewsPosts(posts.map(mapPostToGridPost));
+          setTrendingPosts(posts.slice(0, 4).map(mapPostToTrendingPost));
+          setFeaturedPost(
+            posts.length > 0
+              ? mapPostToFeaturedPost(posts[0])
+              : fallbackFeaturedPost,
+          );
+        }
+      } catch (err) {
+        console.error("Failed to fetch news posts:", err);
+      } finally {
+        if (isActive) {
+          setIsLoadingPosts(false);
+        }
+      }
+    };
+
+    fetchNewsPosts();
+
+    return () => {
+      isActive = false;
+    };
+  }, [search]);
+
+  const filtered = newsPosts;
 
   const totalPages = Math.ceil(filtered.length / POSTS_PER_PAGE);
   const paginated = filtered.slice(
@@ -225,22 +262,8 @@ export default function News() {
             >
               {featuredPost.title}
             </h2>
-            <p
-              className="text-xs mb-3"
-              style={{ color: "rgba(255,255,255,0.6)" }}
-            >
-              {featuredPost.date} &nbsp;·&nbsp; {featuredPost.readTime}
-            </p>
-            <p
-              className="text-sm leading-relaxed mb-4 max-w-lg"
-              style={{
-                color: "rgba(255,255,255,0.75)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
-              {featuredPost.description}
-            </p>
-            {/* ✅ fixed — uses featuredPost.link */}
+
+            {/* uses featuredPost.link */}
             <Link
               to={featuredPost.link}
               className="text-xs uppercase tracking-widest font-semibold hover:opacity-70 transition-opacity"
@@ -259,19 +282,27 @@ export default function News() {
           >
             🔥 Trending
           </h3>
-          {trendingPosts.map((post, index) => (
+          {trendingPosts.map((post) => (
             <Link
               key={post.id}
-              to={`/news/${post.id}`}
-              className="flex gap-4 py-4 border-b last:border-b-0 hover:opacity-70 transition-opacity"
+              to={post.link}
+              className="flex items-start gap-4 py-4 border-b last:border-b-0 hover:opacity-70 transition-opacity"
               style={{ borderColor: "#f0f0f0" }}
             >
-              <span
-                className="text-2xl font-bold flex-shrink-0"
-                style={{ color: "#eeeeee", fontFamily: "var(--font-heading)" }}
-              >
-                {String(index + 1).padStart(2, "0")}
-              </span>
+            
+              <img
+                src={post.image}
+                alt={post.title}
+                className="h-16 w-20 flex-shrink-0 rounded-lg object-cover"
+                style={{
+                  width: "80px",
+                  height: "64px",
+                  backgroundColor: "#f3f4f6",
+                }}
+                onError={(event) => {
+                  event.currentTarget.src = fallbackFeaturedPost.image;
+                }}
+              />
               <div>
                 <p
                   className="text-sm font-semibold leading-snug mb-1"
@@ -293,7 +324,17 @@ export default function News() {
 
       {/* ── News grid ── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-        {paginated.length > 0 ? (
+        {isLoadingPosts ? (
+          <div
+            className="col-span-3 text-center py-16"
+            style={{
+              color: "var(--color-muted)",
+              fontFamily: "var(--font-body)",
+            }}
+          >
+            Loading articles...
+          </div>
+        ) : paginated.length > 0 ? (
           paginated.map((post) => (
             <div
               key={post.id}
@@ -304,6 +345,9 @@ export default function News() {
                 src={post.image}
                 alt={post.title}
                 className="w-full h-48 object-cover"
+                onError={(event) => {
+                  event.currentTarget.src = fallbackFeaturedPost.image;
+                }}
               />
               <div className="p-5">
                 <span
@@ -337,7 +381,7 @@ export default function News() {
                   {post.description}
                 </p>
                 <Link
-                  to={`/news/${post.id}`}
+                  to={post.link}
                   className="text-xs uppercase tracking-widest font-semibold hover:opacity-70 transition-opacity"
                   style={{ color: "var(--color-secondary)" }}
                 >

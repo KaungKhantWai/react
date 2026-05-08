@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-const user = JSON.parse(localStorage.getItem("user")) || {};
+const getStoredUser = () => {
+  try {
+    return JSON.parse(localStorage.getItem("user")) || {};
+  } catch {
+    return {};
+  }
+};
 
 const NAV = [
   {
@@ -14,7 +20,7 @@ const NAV = [
   {
     label: "Management",
     items: [
-      { to: "/admin/users", icon: "users", label: "Users" },
+      { to: "/admin/users", icon: "users", label: "Users", adminOnly: true },
     ],
   },
   {
@@ -64,30 +70,51 @@ const icons = {
   ),
 };
 
-export default function AdminLayout({ children }) {
+export default function AdminLayout({ children, user: authenticatedUser }) {
   const location = useLocation();
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
+  const user = authenticatedUser || getStoredUser();
+  const isAdmin = user.role?.toLowerCase() === "admin";
+  const visibleNav = NAV.map((section) => ({
+    ...section,
+    items: section.items.filter((item) => !item.adminOnly || isAdmin),
+  })).filter((section) => section.items.length > 0);
 
   // ✅ Fix 1: handleLogout was missing
   const handleLogout = () => {
+    localStorage.removeItem("token");
     localStorage.removeItem("user");
-    navigate("/login");
+    navigate("/login", { replace: true });
   };
 
   return (
     <div style={{ display: "flex", minHeight: "100vh", background: "#F7F6F3", fontFamily: "'DM Sans', sans-serif" }}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+      <style>{`
+        @media (max-width: 768px) {
+          .admin-sidebar { position: fixed !important; left: 0; top: 0; height: 100vh; z-index: 999; box-shadow: 2px 0 8px rgba(0,0,0,0.15); }
+          .admin-sidebar.collapsed { transform: translateX(-100%); }
+          .admin-sidebar-overlay { display: block !important; }
+          .admin-main { padding: 1rem !important; }
+          .admin-main.has-mobile-sidebar { margin-left: 220px; }
+        }
+        @media (max-width: 480px) {
+          .admin-sidebar { width: 100% !important; min-width: 100% !important; }
+          .admin-main.has-mobile-sidebar { margin-left: 0 !important; }
+          .admin-main { padding: 0.75rem !important; }
+        }
+      `}</style>
 
       {/* Sidebar */}
-      <aside style={{
+      <aside className={`admin-sidebar${collapsed ? ' collapsed' : ''}`} style={{
         width: collapsed ? 64 : 220,
         minWidth: collapsed ? 64 : 220,
         background: "#1A1A1A",
         display: "flex",
         flexDirection: "column",
         padding: "1.5rem 0",
-        transition: "width .2s, min-width .2s",
+        transition: "width .2s, min-width .2s, transform .3s",
         overflow: "hidden",
       }}>
         {/* Logo */}
@@ -108,7 +135,7 @@ export default function AdminLayout({ children }) {
         </div>
 
         {/* Nav */}
-        {NAV.map(section => (
+        {visibleNav.map(section => (
           <div key={section.label} style={{ marginBottom: "1.5rem" }}>
             {!collapsed && (
               <div style={{ fontSize: 10, color: "#555", textTransform: "uppercase", letterSpacing: ".1em", padding: "0 1.25rem", marginBottom: 4 }}>
@@ -176,7 +203,7 @@ export default function AdminLayout({ children }) {
       </aside>
 
       {/* Main */}
-      <main style={{ flex: 1, overflowY: "auto", padding: "2rem 2.5rem" }}>
+      <main className="admin-main" style={{ flex: 1, overflowY: "auto", padding: "2rem 2.5rem" }}>
         {children}
       </main>
     </div>

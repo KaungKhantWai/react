@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 
 const API = "http://localhost:5000";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const redirectTo = location.state?.from?.pathname || "/admin";
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -27,7 +29,7 @@ export default function LoginPage() {
       if (!res.ok) throw new Error(data.error || data.message || "Invalid credentials");
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
-      navigate("/admin");
+      navigate(redirectTo, { replace: true });
     } catch (err) {
       setError(err.message);
       setLoading(false);
@@ -50,10 +52,22 @@ export default function LoginPage() {
         .auth-btn:hover { background: #E8C547 !important; color: #0F0F0F !important; }
         .auth-btn:active { transform: scale(.98); }
         .auth-link:hover { color: #E8C547 !important; }
+        
+        @media (max-width: 768px) {
+          .login-left { display: none !important; }
+          .login-right { width: 100% !important; padding: 1.5rem !important; }
+          .login-right h1 { font-size: 24px !important; }
+          .login-right form { width: 100% !important; }
+        }
+        @media (max-width: 480px) {
+          .login-right { padding: 1rem !important; }
+          .login-right h1 { font-size: 20px !important; }
+          .login-right input { font-size: 16px !important; }
+        }
       `}</style>
 
       {/* Left panel — decorative */}
-      <div style={{
+      <div className="login-left" style={{
         flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between",
         padding: "3rem", position: "relative", overflow: "hidden",
         borderRight: "0.5px solid #222",
@@ -100,7 +114,7 @@ export default function LoginPage() {
       </div>
 
       {/* Right panel — form */}
-      <div style={{
+      <div className="login-right" style={{
         width: 460, display: "flex", flexDirection: "column",
         justifyContent: "center", padding: "3rem",
         animation: "fadeUp .5s ease both",

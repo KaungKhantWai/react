@@ -40,7 +40,6 @@ export default function RegisterPage() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || data.message || "Registration failed");
-      localStorage.setItem("user", JSON.stringify(data.user));
       navigate("/login");
     } catch (err) {
       setError(err.message);
@@ -66,10 +65,22 @@ export default function RegisterPage() {
         .auth-link:hover { color: #E8C547 !important; }
         .role-card { transition: border-color .15s, background .15s; cursor: pointer; }
         .role-card:hover { border-color: #444 !important; }
+        
+        @media (max-width: 768px) {
+          .register-left { display: none !important; }
+          .register-right { width: 100% !important; padding: 1.5rem !important; }
+          .register-right h1 { font-size: 24px !important; }
+          .register-right form { width: 100% !important; }
+        }
+        @media (max-width: 480px) {
+          .register-right { padding: 1rem !important; }
+          .register-right h1 { font-size: 20px !important; }
+          .register-right input { font-size: 16px !important; }
+        }
       `}</style>
 
       {/* Left panel */}
-      <div style={{
+      <div className="register-left" style={{
         flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between",
         padding: "3rem", position: "relative", overflow: "hidden",
         borderRight: "0.5px solid #222",
@@ -117,7 +128,7 @@ export default function RegisterPage() {
       </div>
 
       {/* Right panel — form */}
-      <div style={{
+      <div className="register-right" style={{
         width: 480, display: "flex", flexDirection: "column",
         justifyContent: "center", padding: "3rem",
         animation: "fadeUp .5s ease both", overflowY: "auto",
@@ -126,7 +137,7 @@ export default function RegisterPage() {
           <h1 style={{ fontFamily: "'DM Serif Display', serif", fontSize: 32, color: "#fff", fontWeight: 400, margin: "0 0 8px" }}>
             Create account
           </h1>
-          <p style={{ fontSize: 13.5, color: "#555", margin: 0 }}>Set up your admin profile</p>
+          <p style={{ fontSize: 13.5, color: "#555", margin: 0 }}>Set up your  profile</p>
         </div>
 
         <form onSubmit={handleSubmit}>

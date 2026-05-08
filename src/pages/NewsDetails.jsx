@@ -51,7 +51,7 @@ export default function NewsDetail() {
     return (
       <main className="flex flex-col items-center justify-center min-h-screen bg-slate-50">
         <h1 className="text-2xl font-bold mb-4 text-slate-800">Article not found</h1>
-        <Link to="/news" className="text-blue-600 hover:underline">
+        <Link to="/news" className=" hover:underline" style={{ color: "var(--color-secondary)" }}>
           ← Back to News
         </Link>
       </main>
@@ -71,7 +71,7 @@ export default function NewsDetail() {
 
         {/* Category */}
         <div className="mb-4">
-          <span className="inline-block text-[10px] uppercase tracking-[0.2em] font-bold px-3 py-1 rounded bg-blue-600 text-white">
+          <span className="inline-block text-[10px] uppercase tracking-[0.2em] font-bold px-3 py-1 rounded  " style={{ color: "var(--color-secondary)" }}>
             {post.category || "General"}
           </span>
         </div>
