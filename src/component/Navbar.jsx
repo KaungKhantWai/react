@@ -18,7 +18,7 @@ export default function Navbar() {
         {/* Logo */}
         <a href="/home" className="flex items-center gap-2">
           <img
-            src="/logo.png"
+            src="/mcaldfLogo.png"
             alt="MCALDF logo"
             className="h-8 w-auto"
           />
