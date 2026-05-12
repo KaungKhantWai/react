@@ -15,7 +15,7 @@ export default function Footer() {
         {/* Column 1 — Logo + Social */}
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <img src="/logo.png" alt="logo" className="h-8 w-auto" />
+            <img src="/mcaldfLogo.png" alt="logo" className="h-8 w-auto" />
             <span
               className="text-xl font-bold"
               style={{
@@ -34,7 +34,7 @@ export default function Footer() {
               fontFamily: "var(--font-body)",
             }}
           >
-            A short description about your brand. Keep it warm and simple.
+            Myanmar-China Agricultural & Livestock Development Foundation. Promoting economic development and sustaining long-term friendship between Myanmar and China.
           </p>
 
           {/* Social icons with Hover */}
@@ -169,7 +169,20 @@ export default function Footer() {
                 style={{ color: "var(--color-muted)" }}
                 className="opacity-80 group-hover:opacity-100 transition-opacity"
               >
-                123 Your Street, <br /> City, Country
+                <strong className="block mb-1" style={{ color: "var(--color-secondary)" }}>Head Office:</strong>
+                No. (103), 1st Floor, 52nd Street (Middle Block),
+                <br />
+                (1) Ward, Pazundaung Township, Botahtaung District,
+                <br />
+                Yangon Region
+                <br />
+                <br />
+                <strong className="block mb-1" style={{ color: "var(--color-secondary)" }}>Branch Office:</strong>
+                Building (12), MICT Park, Agricultural College,
+                <br />
+                Hlaing University Campus, (12) Ward, Hlegu Township,
+                <br />
+                Hlaing Tharyar District, Yangon Region
               </span>
             </div>
 
@@ -222,7 +235,7 @@ export default function Footer() {
           color: "var(--color-muted)",
         }}
       >
-        © {currentYear} Lumina. Built with love.
+        © {currentYear} MCALDF. All rights reserved.
       </div>
     </footer>
   );

@@ -33,7 +33,7 @@ export default function About() {
             fontFamily: "var(--font-heading)",
           }}
         >
-          We Create Beautiful Experiences
+          About MCALDF
         </h1>
 
         {/* H2 — sub heading */}
@@ -44,7 +44,7 @@ export default function About() {
             fontFamily: "var(--font-heading)",
           }}
         >
-          Designers, builders & storytellers
+          Empowering Myanmar's Agricultural Future
         </h2>
 
         {/* Decorative line */}
@@ -61,9 +61,11 @@ export default function About() {
             fontFamily: "var(--font-body)",
           }}
         >
-          This is your main paragraph. Tell visitors who you are, what you do,
-          and why it matters. Keep it warm and personal — people connect with
-          people, not companies.
+          Myanmar is an agricultural-based country where 70 percent of the
+          population depends on agriculture and livestock. MCALDF works in
+          collaboration with government ministries to protect farmers' livelihoods,
+          establish quality monitoring systems, and promote private sector
+          participation in the agricultural sector.
         </p>
 
         <p
@@ -73,8 +75,10 @@ export default function About() {
             fontFamily: "var(--font-body)",
           }}
         >
-          A second paragraph if you need more space. Talk about your values,
-          your approach, or your story.
+          We bring Chinese agricultural experts for training, conduct workshops at
+          agricultural schools and universities, provide resources like seeds and
+          equipment, and connect agricultural associations and entrepreneurs across
+          both nations.
         </p>
 
         <Link to="/about" className="text-xs uppercase tracking-widest font-semibold hover:opacity-70 transition-opacity"

@@ -44,7 +44,7 @@ export default function Contact() {
         className="text-sm md:text-base mb-6 max-w-lg"
         style={{ color: "var(--color-muted)", fontFamily: "var(--font-body)" }}
       >
-        Have a question or want to work together? Fill out the form and we'll
+        Have a question or want to collaborate? Reach out to us or fill out the form and we'll
         get back to you shortly.
       </p>
       <div
@@ -56,7 +56,7 @@ export default function Contact() {
       <div className="grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-12 md:gap-20 items-start">
         {/* Left — Contact Info */}
         <div className="flex flex-col gap-6">
-          {/* Address */}
+          {/* Head Office */}
           <div className="flex items-start gap-4">
             <div
               className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
@@ -74,9 +74,9 @@ export default function Contact() {
             <div>
               <p
                 className="text-xs uppercase tracking-widest mb-1"
-                style={{ color: "var(--color-muted)" }}
+                style={{ color: "var(--color-secondary)" }}
               >
-                Address
+                Head Office
               </p>
               <p
                 className="text-sm font-medium leading-relaxed"
@@ -85,9 +85,49 @@ export default function Contact() {
                   fontFamily: "var(--font-body)",
                 }}
               >
-                123 Your Street,
+                No. (103), 1st Floor, 52nd Street (Middle Block),
                 <br />
-                City, Country
+                (1) Ward, Pazundaung Township, Botahtaung District,
+                <br />
+                Yangon Region
+              </p>
+            </div>
+          </div>
+
+          {/* Branch Office */}
+          <div className="flex items-start gap-4">
+            <div
+              className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+              style={{ backgroundColor: "rgba(233,69,96,0.1)" }}
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="var(--color-secondary)"
+              >
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+              </svg>
+            </div>
+            <div>
+              <p
+                className="text-xs uppercase tracking-widest mb-1"
+                style={{ color: "var(--color-secondary)" }}
+              >
+                Branch Office
+              </p>
+              <p
+                className="text-sm font-medium leading-relaxed"
+                style={{
+                  color: "var(--color-primary)",
+                  fontFamily: "var(--font-body)",
+                }}
+              >
+                Building (12), MICT Park, Agricultural College,
+                <br />
+                Hlaing University Campus, (12) Ward, Hlegu Township,
+                <br />
+                Hlaing Tharyar District, Yangon Region
               </p>
             </div>
           </div>

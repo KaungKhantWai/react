@@ -17,15 +17,15 @@ export default function Hero() {
         {/* Main heading */}
         <h1 className="text-5xl font-bold leading-tight mb-6"
             style={{ color: '#ffffff', fontFamily: 'var(--font-heading)' }}>
-          Your Big Heading <br />
-          Goes <span style={{ color: 'var(--color-secondary)' }}>Right Here</span>
+          Myanmar-China Agricultural <br />
+          & Livestock <span style={{ color: 'var(--color-secondary)' }}>Development Foundation</span>
         </h1>
 
         {/* Subtitle */}
         <p className="text-lg mb-8"
            style={{ color: 'rgba(255,255,255,0.75)', fontFamily: 'var(--font-body)' }}>
-          A short description about what you do or what this site is about.
-          Keep it simple and clear.
+          Promoting economic development with the support of China and sustaining
+          long-term friendship between the two countries through agricultural growth.
         </p>
 
 
